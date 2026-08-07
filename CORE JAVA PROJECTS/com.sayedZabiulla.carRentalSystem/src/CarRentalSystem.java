@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-class CarRentalSystem {
+class CarRentalSystem implements welcomeToShop{
     private List<Car> cars;
     private List<Customer> customers;
     private List<Rental> rentals;
@@ -52,6 +52,7 @@ class CarRentalSystem {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
+            welcome();
             System.out.println("===== Car Rental System =====");
             System.out.println("1. Rent a Car");
             System.out.println("2. Return a Car");
