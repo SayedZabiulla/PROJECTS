@@ -15,6 +15,5 @@ public class Main {
         payrollsystem.removeEmployee(1);
         System.out.println("List after the removal of Employee: ");
         payrollsystem.display();
-
     }
 }
