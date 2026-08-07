@@ -1,4 +1,4 @@
-public class Main {
+public class mainEmployee {
     public static void main(String[] args) {
         payrollSystem payrollsystem = new payrollSystem();
         fullTimeEmployee emp1 = new fullTimeEmployee("Sayed", 1, 50000.00);
