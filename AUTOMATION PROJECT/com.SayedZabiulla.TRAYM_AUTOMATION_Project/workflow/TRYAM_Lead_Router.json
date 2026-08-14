@@ -1,0 +1,439 @@
+{
+  "name": "TRYAM_Lead_Router",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "35ed2adb-1a56-4b7d-b8f8-e70bb6fa0f53",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b7694e11-53ca-4c10-9541-22e0419d7491",
+      "name": "Webhook",
+      "webhookId": "35ed2adb-1a56-4b7d-b8f8-e70bb6fa0f53"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are a lead qualification assistant.\n\nInput:\nName: {{$json.body.name}}\nEmail: {{$json.body.email}}\nBudget: {{$json.body.budget}}\nCompany Size: {{$json.body.companySize}}\nProject Description: {{$json.body.projectDescription}}\n\nReturn ONLY valid JSON:\n{\n  \"leadScore\": 8,\n  \"industry\": \"Technology\",\n  \"reason\": \"Brief reason\"\n}",
+        "messages": {
+          "messageValues": []
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        416,
+        -16
+      ],
+      "id": "a06cc2fd-c7ed-4956-bfb5-bb41e71d9fce",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        416,
+        208
+      ],
+      "id": "d2059679-cfe0-4c92-8275-eb155cff8620",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "HXBYmZxfzpM5nSCN",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "28d25cd9-373a-45ff-87d3-922d2e4d4968",
+              "leftValue": "={{ JSON.parse($json.text).leadScore }}",
+              "rightValue": 7,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        720,
+        -16
+      ],
+      "id": "002d864f-3e7f-43da-a116-afeaf262fe9c",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1IhTc3JzT5EluP5veTllv7uDb1LH0ixSZ82ifaflg7-o",
+          "mode": "list",
+          "cachedResultName": "TRYAM_Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1IhTc3JzT5EluP5veTllv7uDb1LH0ixSZ82ifaflg7-o/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1IhTc3JzT5EluP5veTllv7uDb1LH0ixSZ82ifaflg7-o/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{$node[\"Webhook\"].json.body.name}}",
+            "Email": "={{$node[\"Webhook\"].json.body.email}}",
+            "Budget": "={{$node[\"Webhook\"].json.body.budget}}",
+            "CompanySize": "={{$node[\"Webhook\"].json.body.companySize}}",
+            "ProjectDescription": "={{$node[\"Webhook\"].json.body.projectDescription}}",
+            "LeadScore": "={{JSON.parse($json.text).leadScore}}",
+            "Industry": "={{JSON.parse($json.text).industry}}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Budget",
+              "displayName": "Budget",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CompanySize",
+              "displayName": "CompanySize",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ProjectDescription",
+              "displayName": "ProjectDescription",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "LeadScore",
+              "displayName": "LeadScore",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Industry",
+              "displayName": "Industry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        912,
+        -144
+      ],
+      "id": "7f874427-6fec-495e-9619-75bce5bd76ca",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "LPufrTRGn1NMm2Fs",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "sayedzabeulla@gmail.com",
+        "subject": "Thank you for your inquiry",
+        "message": "=Hi {{$json.body.name}},  Thank you for your inquiry. We have received your request and our team will review it and get back to you soon.  Best regards, TRYAM Automations",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        928,
+        80
+      ],
+      "id": "f8eebcaa-e242-4c7f-bed2-bebf88efc32c",
+      "name": "Send a message",
+      "webhookId": "81c671c6-ee05-422e-947c-3746c28a26bc",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "d3DYyf9Pq2Ydclsw",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "sayedzabeulla@gmail.com",
+        "subject": "Thank you for your inquiry",
+        "message": "=Hi {{$json.body.name}},  Thank you for your inquiry. We have received your request and our team will review it and get back to you soon.  Best regards, TRYAM Automations",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1088,
+        -144
+      ],
+      "id": "17966b8f-fa6a-49bb-95c9-546a96d3bd13",
+      "name": "Send a message1",
+      "webhookId": "81c671c6-ee05-422e-947c-3746c28a26bc",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "d3DYyf9Pq2Ydclsw",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b4449fec-f1ff-4028-a603-9079ef8f8ca9",
+              "leftValue": "={{$json.body.name}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "8bbf1372-4a46-4cfb-9834-9946854a123e",
+              "leftValue": "={{$json.body.email}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "ff90c0b4-4a3c-46df-a174-465e5b63e978",
+              "leftValue": "={{$json.body.budget}}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "7bf5f47f-8a03-4c94-b3c3-ca591e3ecb22",
+              "leftValue": "={{$json.body.companySize}}",
+              "rightValue": "",
+              "operator": {
+                "type": "number",
+                "operation": "exists",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "59f047e8-abcb-4ebd-9cf4-58537377cd5b",
+              "leftValue": "={{$json.body.projectDescription}}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "114ad33c-7dbb-4202-8213-52a81a8cf275",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"error\": \"Missing required fields\"\n}",
+        "options": {
+          "responseCode": 400
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        272,
+        384
+      ],
+      "id": "eed98153-8751-48c2-ac03-ef58fa370a1e",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "4314deee-aea3-465b-a8dc-cae394e42e18",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5e2239e9dbd95395683956caf9985997ccc38cb17aab11062d969bd5a89a7ab7"
+  },
+  "id": "GHFe7PX4NQJNmLDo",
+  "tags": []
+}
