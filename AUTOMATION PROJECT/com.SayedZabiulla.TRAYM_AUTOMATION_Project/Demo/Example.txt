@@ -1,7 +1,7 @@
 high-priority Example: 
 {
   "name": "Rahul Sharma",
-  "email": "rahul@techcorp.com",
+  "email": "sayedzabeulla@gmail.com",
   "budget": 50000,
   "companySize": 250,
   "projectDescription": "We need an AI-powered customer support chatbot integrated with our CRM."
@@ -11,7 +11,7 @@ high-priority Example:
 Low-priority Example:
 {
   "name": "Priya Patel",
-  "email": "priya123@gmail.com",
+  "email": "sayedzabeulla@gmail.com",
   "budget": 1000,
   "companySize": 3,
   "projectDescription": "I am exploring an AI chatbot for my small personal project."
