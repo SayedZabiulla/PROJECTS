@@ -1,0 +1,26 @@
+high-priority Example: 
+{
+  "name": "Rahul Sharma",
+  "email": "rahul@techcorp.com",
+  "budget": 50000,
+  "companySize": 250,
+  "projectDescription": "We need an AI-powered customer support chatbot integrated with our CRM."
+}
+
+
+Low-priority Example:
+{
+  "name": "Priya Patel",
+  "email": "priya123@gmail.com",
+  "budget": 1000,
+  "companySize": 3,
+  "projectDescription": "I am exploring an AI chatbot for my small personal project."
+}
+
+Missing Field Example
+{
+  "email": "sayedzabeulla@gmail.com",
+  "budget": 100,
+  "companySize": 10,
+  "projectDescription": "Need an AI chatbot"
+}
