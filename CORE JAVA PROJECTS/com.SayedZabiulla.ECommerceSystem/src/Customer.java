@@ -14,7 +14,7 @@ public class Customer extends User{
     }
 
     public void addToCart(Product product){
-
+        
     }
 
     public void removeFromCart(int productId){
@@ -26,11 +26,11 @@ public class Customer extends User{
     }
 
     public Order placeOrder(PaymentMethod paymentMethod){
-
+        return null;
     }
 
     public void viewOrderHistory(){
-        
+
     }
 
 }
