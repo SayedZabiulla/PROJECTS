@@ -104,7 +104,7 @@ TRAYM_AUTOMATION_Project/
 │
 ├── README.md
 └── demo/
-    └── Demo Video (Google Drive/Loom)
+    └── Demo Video
 ```
 
 ## Deliverables
