@@ -1,23 +1,28 @@
-public class Admin extends User{
+public class Admin extends User {
 
-    public Admin(int userId, String name, String email, String password) {
+    private ECommerceService eCommerceService;
+
+    public Admin(int userId, String name, String email, String password, ECommerceService eCommerceService) {
         super(userId, name, email, password);
-    }
-    
-    public void addProduct(Product product){
-
+        this.eCommerceService = eCommerceService;
     }
 
-    public void removeProduct(int productId){
-
+    public void addProduct(Product product) {
+        eCommerceService.addProduct(product);
+        System.out.println("Product added successfully.");
     }
 
-    public void updateProduct(int productId, String name, double price, int stock){
-
+    public void removeProduct(int productId) {
+        eCommerceService.removeProduct(productId);
+        eCommerceService.viewAllProducts();
     }
 
-    public void viewAllProducts(){
-        
+    public void updateProduct(int productId, String name, double price, int stock) {
+        eCommerceService.updateProduct(productId, name, price, stock);
+        eCommerceService.viewAllProducts();
     }
 
+    public void viewAllProducts() {
+        eCommerceService.viewAllProducts();
+    }
 }

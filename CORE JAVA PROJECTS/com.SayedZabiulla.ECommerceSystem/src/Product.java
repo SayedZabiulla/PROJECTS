@@ -29,11 +29,13 @@ public class Product {
     }
 
     public void updateStock(int quantity){
-
+        stock+=quantity;
     }
 
     public void displayProduct(){
-        
+        System.out.println("Product ID is: "+getProductId());
+        System.out.println("Product Name is: "+getProductName());
+        System.out.println("The Price is: "+getPrice());
+        System.out.println("Stock Avaialble is: "+getStock());
     }
-
 }
