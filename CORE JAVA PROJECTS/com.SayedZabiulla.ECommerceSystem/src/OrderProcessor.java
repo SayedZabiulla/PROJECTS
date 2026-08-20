@@ -14,7 +14,15 @@ public class OrderProcessor extends Thread{
 
     @Override
     public void run() {
-        super.run();
+        lock.lock();
+        try{
+            Order order = customer.placeOrder(paymentMethod);
+            if (order!=null)
+                System.out.println("Order processed successfully. Order ID: "+order.getOrderId());
+            else
+                System.out.println("Order processing failed.");
+        }finally{
+            lock.unlock();
+        }
     }
-
 }

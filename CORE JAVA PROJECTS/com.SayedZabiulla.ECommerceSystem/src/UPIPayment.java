@@ -8,7 +8,12 @@ public class UPIPayment implements PaymentMethod{
 
     @Override
     public boolean pay(double amount) {
-        return false;
+        if (upiId.isEmpty()){
+            System.out.println("Invalid UPI ID");
+            return false;
+        }
+        System.out.println("Payment Successfull");
+        return true;
     }
 
 }
